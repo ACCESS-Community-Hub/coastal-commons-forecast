@@ -1,0 +1,3 @@
+#!jinja2
+[install]
+    source dirs = ${CYLC_WORKFLOW_SOURCE_DIR}, ${CYLC_WORKFLOW_SOURCE_DIR_ROSES}

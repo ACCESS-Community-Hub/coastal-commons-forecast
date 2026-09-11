@@ -1,0 +1,40 @@
+#!jinja2
+## https://cylc.github.io/cylc-doc/stable/html/user-guide/writing-workflows/jinja2.html#jinja
+
+[scheduler]
+    UTC mode = True
+
+[scheduling]
+    initial cycle point = 20260909T0000Z #previous(T00Z)
+    runahead limit = P0D ## maximum of cycle points to be active at the same time
+    
+    [[xtriggers]]
+        T0_plus_8h = wall_clock(offset=PT8H)
+
+    [[graph]]
+        ## -- 00Z daily
+        T00 = """
+            @T0_plus_8h => down_ecmwf-ifs_global
+        """
+
+[runtime]
+
+    [[root]]
+        env-script = "source $HOME/.my_cylc.env"
+
+    [[down_ecmwf-ifs_global]]
+        platform = gadi_pbs
+        script = $TASK_JOBSCRIPT
+        execution retry delays = 1*PT5M 
+        submission retry delays = 1*PT5M
+        [[[environment]]]
+            TASK_JOBSCRIPT = $MY_TASK_SCRIPT_DIR/jobscript_gadi-python-hydra.sh
+            TASK_SCRIPT_FILE = $MY_TASK_SCRIPT_DIR/ecmwf-ifs/download_atmos_ecmwf.py
+            TASK_CONFIG_DIR = $CYLC_WORKFLOW_SOURCE_DIR/global-workflow/task-config
+            TASK_CONFIG_FILE = download_atmos_ecmwf-ifs_global
+            HYDRA_FULL_ERROR = 1
+        [[[directives]]]
+            -q = copyq
+            -l ncpus=1
+            -l mem=3GB
+            -l walltime=01:00:00
