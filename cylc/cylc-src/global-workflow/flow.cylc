@@ -24,11 +24,10 @@
 
     [[down_ecmwf-ifs_global]]
         platform = gadi_pbs
-        script = $TASK_JOBSCRIPT
+        script = $MY_TASK_SCRIPT_DIR/jobscript_gadi-python-hydra.sh
         execution retry delays = 1*PT5M 
         submission retry delays = 1*PT5M
         [[[environment]]]
-            TASK_JOBSCRIPT = $MY_TASK_SCRIPT_DIR/jobscript_gadi-python-hydra.sh
             TASK_SCRIPT_FILE = $MY_TASK_SCRIPT_DIR/ecmwf-ifs/download_atmos_ecmwf.py
             TASK_CONFIG_DIR = $CYLC_WORKFLOW_SOURCE_DIR/global-workflow/task-config
             TASK_CONFIG_FILE = download_atmos_ecmwf-ifs_global
@@ -41,11 +40,10 @@
 
     [[subset_ecmwf-ifs_global-to-aus]]
         platform = gadi_pbs
-        script = $TASK_JOBSCRIPT
+        script = $MY_TASK_SCRIPT_DIR/jobscript_gadi-python-hydra.sh
         execution retry delays = 1*PT5M
         submission retry delays = 1*PT5M
         [[[environment]]]
-            TASK_JOBSCRIPT = $MY_TASK_SCRIPT_DIR/jobscript_gadi-python-hydra.sh
             TASK_SCRIPT_FILE = $MY_TASK_SCRIPT_DIR/ecmwf-ifs/subset_ecmwf-ifs_global.py
             TASK_CONFIG_DIR = $CYLC_WORKFLOW_SOURCE_DIR/global-workflow/task-config
             TASK_CONFIG_FILE = subset_ecmwf-ifs_global-to-aus
