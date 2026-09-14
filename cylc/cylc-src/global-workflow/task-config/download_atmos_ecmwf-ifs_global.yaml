@@ -1,9 +1,8 @@
 ## Dissemination schedule:
 ## https://confluence.ecmwf.int/display/DAC/Dissemination+schedule
 
-## -- The actual configuration for the ECMWF-IFS download task
 schedule:
-  cycle: null
+  cycle: ${oc.env:CYLC_TASK_CYCLE_POINT}
 
 task:
   ## "source" is either the name of server to contact or a fully qualified URL. Possible values are:
