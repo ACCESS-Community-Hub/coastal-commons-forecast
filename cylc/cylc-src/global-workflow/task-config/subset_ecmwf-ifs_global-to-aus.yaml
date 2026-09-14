@@ -1,0 +1,102 @@
+## Dissemination schedule:
+## https://confluence.ecmwf.int/display/DAC/Dissemination+schedule
+
+## -- The actual configuration for the ECMWF-IFS process-to-ROMS task
+schedule:
+  cycle: ${oc.env:CYLC_TASK_CYCLE_POINT}
+
+task:
+  params:
+    msl: # [Mean sea level pressure]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-msl_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-msl_%Y%m%dT%H.nc
+      minimum_longitude: &LONMIN 87.0  ## 105.0 -> MOM-Aus  | 90.0 -> Ivica's WA-ROMS
+      maximum_longitude: &LONMAX 178.0 ## 175.0 -> MOM-Aus
+      minimum_latitude: &LATMIN -58.0 ## -55.0 -> MOM-Aus 
+      maximum_latitude: &LATMAX 6.0   ## 3.0   -> MOM-Aus
+
+    10u: # [10 metre U wind component]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-10u_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-10u_%Y%m%dT%H.nc
+      minimum_longitude: *LONMIN
+      maximum_longitude: *LONMAX
+      minimum_latitude: *LATMIN
+      maximum_latitude: *LATMAX
+
+    10v: # [10 metre V wind component]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-10v_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-10v_%Y%m%dT%H.nc
+      minimum_longitude: *LONMIN
+      maximum_longitude: *LONMAX
+      minimum_latitude: *LATMIN
+      maximum_latitude: *LATMAX
+
+    2t: # [2 metre temperature]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-2t_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-2t_%Y%m%dT%H.nc
+      minimum_longitude: *LONMIN
+      maximum_longitude: *LONMAX
+      minimum_latitude: *LATMIN
+      maximum_latitude: *LATMAX
+
+    tprate: # [Total precipitation rate]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-tprate_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-tprate_%Y%m%dT%H.nc
+      minimum_longitude: *LONMIN
+      maximum_longitude: *LONMAX
+      minimum_latitude: *LATMIN
+      maximum_latitude: *LATMAX
+
+    r: # [Relative humidity]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-r_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-r_%Y%m%dT%H.nc
+      minimum_longitude: *LONMIN
+      maximum_longitude: *LONMAX
+      minimum_latitude: *LATMIN
+      maximum_latitude: *LATMAX
+
+    strd: # [Surface long-wave (thermal) radiation downwards]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-strd_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-strd_%Y%m%dT%H.nc
+      minimum_longitude: *LONMIN
+      maximum_longitude: *LONMAX
+      minimum_latitude: *LATMIN
+      maximum_latitude: *LATMAX
+
+    ssrd: # [Surface short-wave (solar) radiation downwards]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-ssrd_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-ssrd_%Y%m%dT%H.nc
+      minimum_longitude: *LONMIN
+      maximum_longitude: *LONMAX
+      minimum_latitude: *LATMIN
+      maximum_latitude: *LATMAX
+
+    2d: # [2 metre dewpoint temperature]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-2d_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-2d_%Y%m%dT%H.nc
+      minimum_longitude: *LONMIN
+      maximum_longitude: *LONMAX
+      minimum_latitude: *LATMIN
+      maximum_latitude: *LATMAX
+
+    ssr: # [Surface short-wave (solar) net radiation]
+      srcfile: ${oc.env:CYLC_WORKFLOW_RUN_DIR}/work/${oc.env:CYLC_TASK_CYCLE_POINT}/down_ecmwf-ifs_global/ecmwf_ifs_oper_fc-ssr_%Y%m%dT%H.grib2
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-ssr_%Y%m%dT%H.nc
+      minimum_longitude: *LONMIN
+      maximum_longitude: *LONMAX
+      minimum_latitude: *LATMIN
+      maximum_latitude: *LATMAX
+
+
+
+## -- Hydra-specific settings
+## The following settings ensure no "outputs" directory
+## nor logging files are created
+defaults:
+  - override hydra/job_logging: none
+  - override hydra/hydra_logging: none
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .

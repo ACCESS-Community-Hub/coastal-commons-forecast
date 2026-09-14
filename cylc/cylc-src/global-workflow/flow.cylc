@@ -5,7 +5,7 @@
     UTC mode = True
 
 [scheduling]
-    initial cycle point = 20260909T0000Z #previous(T00Z)
+    initial cycle point = previous(T00Z)
     runahead limit = P0D ## maximum of cycle points to be active at the same time
     
     [[xtriggers]]
@@ -14,7 +14,7 @@
     [[graph]]
         ## -- 00Z daily
         T00 = """
-            @T0_plus_8h => down_ecmwf-ifs_global
+            @T0_plus_8h => down_ecmwf-ifs_global => subset_ecmwf-ifs_global-to-aus
         """
 
 [runtime]
@@ -38,3 +38,20 @@
             -l ncpus=1
             -l mem=3GB
             -l walltime=01:00:00
+
+    [[subset_ecmwf-ifs_global-to-aus]]
+        platform = gadi_pbs
+        script = $TASK_JOBSCRIPT
+        execution retry delays = 1*PT5M
+        submission retry delays = 1*PT5M
+        [[[environment]]]
+            TASK_JOBSCRIPT = $MY_TASK_SCRIPT_DIR/jobscript_gadi-python-hydra.sh
+            TASK_SCRIPT_FILE = $MY_TASK_SCRIPT_DIR/ecmwf-ifs/subset_ecmwf-ifs_global.py
+            TASK_CONFIG_DIR = $CYLC_WORKFLOW_SOURCE_DIR/global-workflow/task-config
+            TASK_CONFIG_FILE = subset_ecmwf-ifs_global-to-aus
+            HYDRA_FULL_ERROR = 1
+        [[[directives]]]
+            -q = normal
+            -l ncpus=1
+            -l mem=5GB
+            -l walltime=00:10:00
