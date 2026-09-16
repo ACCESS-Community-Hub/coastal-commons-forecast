@@ -1,0 +1,59 @@
+## Dissemination schedule:
+## 12:00 UTC (22:00 AEST)
+
+## -- The actual configuration for the CMEMS Mercator download task
+schedule:
+  cycle: ${oc.env:CYLC_TASK_CYCLE_POINT}
+
+task:
+  ssh:
+    fc_horizon: &HORIZON 7D
+    minimum_longitude: &LONMIN 87.0  ## 105.0 -> MOM-Aus  | 90.0 -> Ivica's WA-ROMS
+    maximum_longitude: &LONMAX 178.0 ## 175.0 -> MOM-Aus
+    minimum_latitude: &LATMIN -58.0 ## -55.0 -> MOM-Aus 
+    maximum_latitude: &LATMAX 6.0   ## 3.0   -> MOM-Aus
+    pad: &PAD 0.0 ## REMOVE THIS PAD!!!
+    dataset_id: cmems_mod_glo_phy_anfc_0.083deg_P1D-m
+    outfile: ${oc.env:CYLC_TASK_WORK_DIR}/cmems_mod_glo_phy_anfc_0.083deg_P1D-m_%Y%m%dT%H.nc
+
+  temp:
+    fc_horizon: *HORIZON
+    minimum_longitude: *LONMIN
+    maximum_longitude: *LONMAX
+    minimum_latitude: *LATMIN
+    maximum_latitude: *LATMAX
+    pad: *PAD
+    dataset_id: cmems_mod_glo_phy-thetao_anfc_0.083deg_P1D-m
+    outfile: ${oc.env:CYLC_TASK_WORK_DIR}/cmems_mod_glo_phy-thetao_anfc_0.083deg_P1D-m_%Y%m%dT%H.nc
+
+  salt:
+    fc_horizon: *HORIZON
+    minimum_longitude: *LONMIN
+    maximum_longitude: *LONMAX
+    minimum_latitude: *LATMIN
+    maximum_latitude: *LATMAX
+    pad: *PAD
+    dataset_id: cmems_mod_glo_phy-so_anfc_0.083deg_P1D-m
+    outfile: ${oc.env:CYLC_TASK_WORK_DIR}/cmems_mod_glo_phy-so_anfc_0.083deg_P1D-m_%Y%m%dT%H.nc
+
+  currents:
+    fc_horizon: *HORIZON
+    minimum_longitude: *LONMIN
+    maximum_longitude: *LONMAX
+    minimum_latitude: *LATMIN
+    maximum_latitude: *LATMAX
+    pad: *PAD
+    dataset_id: cmems_mod_glo_phy-cur_anfc_0.083deg_P1D-m
+    outfile: ${oc.env:CYLC_TASK_WORK_DIR}/cmems_mod_glo_phy-cur_anfc_0.083deg_P1D-m_%Y%m%dT%H.nc
+
+## -- Hydra-specific settings
+## The following settings ensure no "outputs" directory
+## nor logging files are created
+defaults:
+  - override hydra/job_logging: none
+  - override hydra/hydra_logging: none
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .
