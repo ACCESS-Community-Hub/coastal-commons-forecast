@@ -15,8 +15,8 @@
         ## -- 00Z daily
         T00 = """
             @wall_clock => down_gdac-argo_aus
-            # @T0_plus_8h => down_ecmwf-ifs_global => subset_ecmwf-ifs_global-to-aus
-            # @T0_plus_8h => down_cmems-mercator_aus
+            @T0_plus_8h => down_ecmwf-ifs_global => subset_ecmwf-ifs_global-to-aus
+            @T0_plus_8h => down_cmems-mercator_aus
         """
 
 [runtime]
