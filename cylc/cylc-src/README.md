@@ -73,7 +73,7 @@ module use /g/data/hr22/modulefiles
 module load cylc/8.6.4
 ```
 
-followed by loading the user-specific environment file (from **Step 2.1** above)
+followed by loading the user-specific environment file (from **Step 1.3** above)
 
 ```bash
 source $HOME/.my_cylc.env
