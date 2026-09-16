@@ -53,3 +53,19 @@
             -l ncpus=1
             -l mem=5GB
             -l walltime=00:10:00
+
+    [[down_gdac-argo_aus]]
+        platform = gadi_pbs
+        script = $MY_TASK_SCRIPT_DIR/jobscript_gadi-python-hydra.sh
+        execution retry delays = 1*PT30M 
+        submission retry delays = 1*PT5M
+        [[[environment]]]
+            TASK_SCRIPT_FILE = $MY_TASK_SCRIPT_DIR/gdac-argo/download_ocean_gdac-argo.py
+            TASK_CONFIG_DIR = $CYLC_WORKFLOW_SOURCE_DIR/global-workflow/task-config
+            TASK_CONFIG_FILE = download_ocean_gdac-argo_aus
+            HYDRA_FULL_ERROR = 1
+        [[[directives]]]
+            -q = copyq
+            -l ncpus=1
+            -l mem=3GB
+            -l walltime=00:20:00

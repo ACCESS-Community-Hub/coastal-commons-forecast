@@ -1,0 +1,38 @@
+schedule:
+  cycle: ${oc.env:CYLC_TASK_CYCLE_POINT}
+
+task:
+  profile:
+    outdir: ${oc.env:CYLC_TASK_WORK_DIR}/profiles
+    lookback_period: 1D
+    longitude_min: 87.0  ## 105.0 -> MOM-Aus | 90.0 -> Ivica's WA-ROMS
+    longitude_max: 178.0 ## 175.0 -> MOM-Aus
+    latitude_min: -58.0  ## -55 -> MOM-Aus 
+    latitude_max: 6.0    ## 3.0 -> MOM-Aus
+    hosts:
+      - ftp
+      # - s3
+      # - https
+
+## -- Hydra-specific settings
+## The following settings ensure no "outputs" 
+## directory nor logging files are created
+defaults:
+  - override hydra/job_logging: none
+  - override hydra/hydra_logging: none
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+
+## Host options for ArgoIndex:
+##
+## Full host	                              Shortcut
+## -------------------------------------    -------------------
+## https://data-argo.ifremer.fr	            http or https
+## https://usgodae.org/pub/outgoing/argo	  us-http or us-https
+## ftp://ftp.ifremer.fr/ifremer/argo	      ftp
+## s3://argo-gdac-sandbox/pub/idx	          s3 or aws
+##
+## https://github.com/euroargodev/argopy/blob/802ef617e9a33a53c15b68d0876691a25d8b8c83/docs/advanced-tools/stores/argoindex.rst#L69
