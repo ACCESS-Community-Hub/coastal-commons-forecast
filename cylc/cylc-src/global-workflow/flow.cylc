@@ -70,7 +70,7 @@
             -q = copyq
             -l ncpus=1
             -l mem=5GB
-            -l walltime=01:00:00
+            -l walltime=04:00:00
 
     [[down_gdac-argo_aus]]
         platform = gadi_pbs
