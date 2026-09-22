@@ -46,9 +46,9 @@
         execution retry delays = 1*PT5M
         submission retry delays = 1*PT5M
         [[[environment]]]
-            TASK_SCRIPT_FILE = $MY_TASK_SCRIPT_DIR/ecmwf-ifs/subset_ecmwf-ifs_global.py
+            TASK_SCRIPT_FILE = $MY_TASK_SCRIPT_DIR/ecmwf-ifs/subset_atmos_ecmwf-ifs_global.py
             TASK_CONFIG_DIR = $CYLC_WORKFLOW_SOURCE_DIR/global-workflow/task-config
-            TASK_CONFIG_FILE = subset_ecmwf-ifs_global-to-aus
+            TASK_CONFIG_FILE = subset_atmos_ecmwf-ifs_global-to-aus
             HYDRA_FULL_ERROR = 1
         [[[directives]]]
             -q = normal
