@@ -1,0 +1,40 @@
+#!jinja2
+## https://cylc.github.io/cylc-doc/stable/html/user-guide/writing-workflows/jinja2.html#jinja
+
+[scheduler]
+    UTC mode = True
+
+[scheduling]
+    initial cycle point = previous(T00Z)
+    runahead limit = P0D ## maximum of cycle points to be active at the same time
+    
+    [[xtriggers]]
+        globalworkflow_ecmwf_ifs = workflow_state(workflow_task_id="global-workflow//%(point)s/subset_ecmwf-ifs_global-to-aus")
+
+    [[graph]]
+        ## -- 00Z daily
+        T00 = """
+            @globalworkflow_ecmwf_ifs => process_ecmwf-ifs_global_to_roms_eac
+        """
+
+[runtime]
+    [[root]]
+        env-script = "source $HOME/.my_cylc.env"
+
+    [[process_ecmwf-ifs_global_to_roms_eac]]
+        platform = gadi_pbs
+        script = $MY_TASK_SCRIPT_DIR/jobscript_gadi-python-hydra.sh
+        execution retry delays = 1*PT5M
+        submission retry delays = 1*PT5M
+        [[[environment]]]
+            UPSTREAM_CYLC_TASK_WORK_DIR = $HOME/cylc-run/global-workflow/runN/work/$CYLC_TASK_CYCLE_POINT
+            TASK_JOBSCRIPT = $MY_TASK_SCRIPT_DIR/jobscript_gadi-python-hydra.sh
+            TASK_SCRIPT_FILE = $MY_TASK_SCRIPT_DIR/ecmwf-ifs/process_atmos_ecmwf-ifs_global_to_roms.py
+            TASK_CONFIG_DIR = $CYLC_WORKFLOW_SOURCE_DIR/regional-workflow/task-config
+            TASK_CONFIG_FILE = process_atmos_ecmwf-ifs_global_to_roms_eac
+            HYDRA_FULL_ERROR = 1
+        [[[directives]]]
+            -q = normal
+            -l ncpus=1
+            -l mem=5GB
+            -l walltime=00:15:00

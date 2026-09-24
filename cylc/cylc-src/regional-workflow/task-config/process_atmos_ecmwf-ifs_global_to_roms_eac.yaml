@@ -1,0 +1,65 @@
+
+schedule:
+  cycle: ${oc.env:CYLC_TASK_CYCLE_POINT}
+
+task:
+  params:
+    msl: # [Mean sea level pressure]
+      srcfile: ${oc.env:UPSTREAM_CYLC_TASK_WORK_DIR}/subset_ecmwf-ifs_global-to-aus/ecmwf_ifs_oper_fc-msl_%Y%m%dT%H.nc
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-msl_%Y%m%dT%H.nc
+      roms_grid_file: &GRIDFILE /g/data/yj27/users/pc3020/source/unsw-oceanography/roms-static/eac/EACouter_varres_grd_mergedBLbry_uhroms.nc
+      pad: &PAD 1.0
+
+    10u: # [10 metre U wind component]
+      srcfile: ${oc.env:UPSTREAM_CYLC_TASK_WORK_DIR}/subset_ecmwf-ifs_global-to-aus/ecmwf_ifs_oper_fc-10u_%Y%m%dT%H.nc
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-10u_%Y%m%dT%H.nc
+      roms_grid_file: *GRIDFILE
+      pad: *PAD
+
+    10v: # [10 metre V wind component]
+      srcfile: ${oc.env:UPSTREAM_CYLC_TASK_WORK_DIR}/subset_ecmwf-ifs_global-to-aus/ecmwf_ifs_oper_fc-10v_%Y%m%dT%H.nc
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-10v_%Y%m%dT%H.nc
+      roms_grid_file: *GRIDFILE
+      pad: *PAD
+
+    2t: # [2 metre temperature]
+      srcfile: ${oc.env:UPSTREAM_CYLC_TASK_WORK_DIR}/subset_ecmwf-ifs_global-to-aus/ecmwf_ifs_oper_fc-2t_%Y%m%dT%H.nc
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-2t_%Y%m%dT%H.nc
+      roms_grid_file: *GRIDFILE
+      pad: *PAD
+
+    tprate: # [Total precipitation rate]
+      srcfile: ${oc.env:UPSTREAM_CYLC_TASK_WORK_DIR}/subset_ecmwf-ifs_global-to-aus/ecmwf_ifs_oper_fc-tprate_%Y%m%dT%H.nc
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-tprate_%Y%m%dT%H.nc
+      roms_grid_file: *GRIDFILE
+      pad: *PAD
+
+    r: # [Relative humidity]
+      srcfile: ${oc.env:UPSTREAM_CYLC_TASK_WORK_DIR}/subset_ecmwf-ifs_global-to-aus/ecmwf_ifs_oper_fc-r_%Y%m%dT%H.nc
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-r_%Y%m%dT%H.nc
+      roms_grid_file: *GRIDFILE
+      pad: *PAD
+
+    strd: # [Surface long-wave (thermal) radiation downwards]
+      srcfile: ${oc.env:UPSTREAM_CYLC_TASK_WORK_DIR}/subset_ecmwf-ifs_global-to-aus/ecmwf_ifs_oper_fc-strd_%Y%m%dT%H.nc
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-strd_%Y%m%dT%H.nc
+      roms_grid_file: *GRIDFILE
+      pad: *PAD
+
+    ssrd: # [Surface short-wave (solar) radiation downwards]
+      srcfile: ${oc.env:UPSTREAM_CYLC_TASK_WORK_DIR}/subset_ecmwf-ifs_global-to-aus/ecmwf_ifs_oper_fc-ssrd_%Y%m%dT%H.nc
+      outfile: ${oc.env:CYLC_TASK_WORK_DIR}/ecmwf_ifs_oper_fc-ssrd_%Y%m%dT%H.nc
+      roms_grid_file: *GRIDFILE
+      pad: *PAD
+
+## -- Hydra-specific settings
+## The following settings ensure no "outputs" directory
+## nor logging files are created
+defaults:
+  - override hydra/job_logging: none
+  - override hydra/hydra_logging: none
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .
