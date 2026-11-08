@@ -54,7 +54,7 @@
         [[[directives]]]
             -q = normal
             -l ncpus=1
-            -l mem=5GB
+            -l mem=30GB
             -l walltime=00:10:00
             -l storage=gdata/hr22+gdata/yj27+gdata/vk83
 
