@@ -38,3 +38,4 @@
             -l ncpus=1
             -l mem=5GB
             -l walltime=00:15:00
+            -l storage=gdata/hr22+gdata/yj27+gdata/vk83
